@@ -1,0 +1,167 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    allprojects {
+        repositories {
+            google()
+            jcenter()
+        }
+    }
+
+    defaultConfig {
+        applicationId "hlc.realtime.location"
+        minSdkVersion 23
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        // ??? > 65536
+        multiDexEnabled true
+
+        // 測試用宣告
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        //針對 /androidTest 的 dependency 設定
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        //優化/混淆工具  consumerProguardFiles
+        // 1.consumer-rules.pro
+        // 2.proguard-rules.pro
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.5.0'
+    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    // testing 測試用套件 testImplementation 代表這個 dependency 只會在測試的時候需要
+    // 測試相關教學 https://ithelp.ithome.com.tw/articles/10226807
+
+    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'androidx.test:core:1.3.0'
+    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
+    testImplementation 'org.mockito:mockito-inline:3.5.13'
+    testImplementation 'androidx.test.ext:junit:1.1.2'
+
+    // /src 下有 /main、/test 跟 /androidTest 三個資料夾嗎
+    // androidTestImplementation 就是針對 /androidTest 的 dependency 設定
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'com.android.support.test:runner:1.3.0-beta01'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    /*** 3rd lib ***/
+    //Circle View 圓框圖片
+    implementation "de.hdodenhof:circleimageview:3.0.0"
+    //xtab 上方導航列
+    implementation "com.androidkun:XTabLayout:1.1.5"
+    //Banner 輪播圖片
+    implementation "com.ms:Banner-androidx:2.3.16"
+    implementation "com.youth.banner:banner:2.1.0"
+    //Banner 文字輪播/跑馬燈
+    implementation "com.superluo:textbannerview:1.0.5"
+
+    //log
+    implementation "com.jakewharton.timber:timber:4.7.1"
+
+    //SharedPreferences
+    implementation "androidx.preference:preference-ktx:1.0.0"
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //fragment ktx 用 lambda 簡化 fragment 操作
+    implementation "androidx.fragment:fragment-ktx:1.1.0-alpha09"
+
+    //lifecycler
+    kapt "android.arch.lifecycle:compiler:2.2.0-alpha01"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0-alpha01"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-alpha01"
+
+    // RxPermissions
+    //implementation 'com.github.tbruyelle:rxpermissions:0.12' (with rxJava 3)
+    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+
+    // RxJava2 Dependencies
+    //implementation 'io.reactivex.rxjava3:rxkotlin:3.0.1'
+    //implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+
+    // RxJava2 Dependencies
+    implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.5.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.5.0"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.5.0"
+
+    //OKhttp
+    implementation "com.squareup.okhttp3:okhttp:3.5.0"
+    implementation("com.squareup.okhttp3:logging-interceptor:4.8.1")
+
+    //RecyclerView
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
+
+    //Room
+    def room_version = "2.2.5"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-rxjava2:$room_version"
+    kapt 'android.arch.persistence.room:compiler:2.2.3'
+    //kapt "androidx.room:room-compiler:2.1.0"
+    //kapt "android.arch.persistence.room:compiler:1.1.1"
+
+    //Dagger
+    implementation "com.google.dagger:dagger:2.24"
+    kapt "com.google.dagger:dagger-compiler:2.24"
+    implementation "com.google.dagger:dagger-android-support:2.24"  //support libraries androidinjector
+    kapt "com.google.dagger:dagger-android-processor:2.24"
+
+    //Navigation
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
+
+    //MPAndroidChart 統計圖表
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    // ??? > 65536
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    //GPS
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
+}
