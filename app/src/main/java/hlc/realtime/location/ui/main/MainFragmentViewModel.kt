@@ -42,6 +42,7 @@ class MainFragmentViewModel @Inject constructor(): BaseViewModel(){
         Timber.tag("hlcDebug").d("getCurrentTime : $cYear / $cMonth / $cDay")
         Timber.tag("hlcDebug").d("getCurrentTime : $hour / $hour2 / $min")
 
+        
         if (status) {
             startTime = "$hour:$min"
             recordStatus.value = true
