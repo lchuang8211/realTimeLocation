@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import hlc.realtime.location.R
 import hlc.realtime.location.base.BaseActivity
 import hlc.realtime.location.databinding.ActivityMainBinding
+import hlc.realtime.location.support.GPSHelper
 import javax.inject.Inject
 
 class MainActivity @Inject constructor() : BaseActivity() {
@@ -28,5 +29,10 @@ class MainActivity @Inject constructor() : BaseActivity() {
 
         binding.tvText.text = "hlc flow"
 
+    }
+
+    override fun onStop() {
+        GPSHelper.removeGPS()
+        super.onStop()
     }
 }
