@@ -17,7 +17,7 @@ private const val TAG = "RoomDataBase"
 abstract class RoomDataBase : RoomDatabase(){
 
     // 指定 Table 對應的操作 class Dao
-    abstract fun userInfoDao(): DefaultTableDao
+    abstract fun defaultTableDao(): DefaultTableDao
 
     // singleton 避免重複多次實體化資料庫  // how to instance ?
 //    companion object{

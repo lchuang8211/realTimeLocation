@@ -30,10 +30,10 @@ object GPSHelper  {
 
     fun setInit(context: Application) {
         this.context = context
-        locationListener = LocationListener {
-            this.vertical = it.longitude // 經度
-            this.horizontal = it.latitude // 緯度
-        }
+//        locationListener = LocationListener {
+//            this.vertical = it.longitude // 經度
+//            this.horizontal = it.latitude // 緯度
+//        }
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(GPSHelper.context)
 
@@ -47,8 +47,7 @@ object GPSHelper  {
 
         locationRequest = LocationRequest.create()
         locationRequest.interval = 10000 // 時間間隔
-        locationRequest.fastestInterval = 5000 //可以處理得最快時間間隔
-
+        locationRequest.fastestInterval = 1000 //可以處理得最快時間間隔
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
 
     }
@@ -84,7 +83,7 @@ object GPSHelper  {
                     setCurrentAddress()
                 }
                 if (it==null) Toast.makeText(context, "找不到GPS",Toast.LENGTH_SHORT).show()
-                fusedLocationProviderClient.removeLocationUpdates(mLocationCallback)
+//                fusedLocationProviderClient.removeLocationUpdates(mLocationCallback)
             }
             .addOnFailureListener {
                 Timber.tag("hlcDebug").d("addOnFailureListener : $it")
@@ -101,19 +100,15 @@ object GPSHelper  {
         geocoder = Geocoder(context, Locale.TAIWAN)
         addressList.clear()
         addressList.addAll( geocoder.getFromLocation(horizontal, vertical,3) )
-
-        addressList?.let {
-            val address: String = addressList[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-            val city: String = addressList[0].locality
-            val state: String = addressList[0].adminArea
-            val country: String = addressList[0].countryName
-            val postalCode: String = addressList[0].postalCode
-            val knownName: String = addressList[0].featureName
-        }
     }
 
     fun getCurrentAddress() = addressList
 
     fun getLongitude() = vertical
+
     fun getLatitude() = horizontal
+
+    fun removeGPS(){
+        fusedLocationProviderClient.removeLocationUpdates(mLocationCallback)
+    }
 }
