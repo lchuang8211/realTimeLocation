@@ -1,8 +1,10 @@
 package hlc.realtime.location.ui.main.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import hlc.realtime.location.R
 import hlc.realtime.location.data.api.LocationData
 import hlc.realtime.location.databinding.LayoutDateItemBinding
 import hlc.realtime.location.databinding.LayoutLocationListItemBinding
@@ -11,7 +13,7 @@ import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
-class LocationItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class LocationItemAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var itemList= emptyList<LocationData.LocationDetail>()
     private lateinit var viewModel: MainFragmentViewModel
@@ -38,7 +40,7 @@ class LocationItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         //多型應用 對應相應Class取得對應資料
         if (holder is ViewHolder){
-            holder.bind( itemList[ position ] )
+            holder.bind( itemList[ position ] , position, context)
         }
     }
 
@@ -55,13 +57,20 @@ class LocationItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
 
         //顯示資料的規則/邏輯
-        fun bind(item: LocationData.LocationDetail){
+        fun bind(item: LocationData.LocationDetail, position: Int, context: Context){
+
+            if (position%2 == 0){
+                binding.clBackground.background = context.getDrawable(R.color.linen)
+            } else {
+                binding.clBackground.background = context.getDrawable(R.color.antique_white)
+            }
 
             Timber.tag("hlcDebug").d("bind item 2: $item")
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.TAIWAN)
+            binding.tvSeq.text = item.seq.toString().padStart(2, ' ')+". "
             binding.tvStartTime.text = item.startTime
             binding.tvEndTime.text = item.endTime
-            binding.tvLocation.text = item.address
+            binding.tvLocation.text = item.firstAddress
 
         }
     }

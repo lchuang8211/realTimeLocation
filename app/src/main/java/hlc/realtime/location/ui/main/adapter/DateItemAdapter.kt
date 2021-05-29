@@ -55,11 +55,11 @@ class DateItemAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
         fun bind(item: LocationData, context: Context){
             Timber.tag("hlcDebug").d("bind item 1: $item")
             val date = item.date
-            binding.tvDate.text = "${date.year}/${date.month}/${date.day}"
+            binding.tvDate.text = "${date?.year}/${date?.month}/${date?.day}"
 
-            val adapter = LocationItemAdapter()
+            val adapter = LocationItemAdapter(context)
             binding.rvLocationDetail.adapter = adapter
-            adapter.sumbit(item.locationDetail)
+            item.locationDetail?.let { adapter.sumbit(item.locationDetail) }
             binding.rvLocationDetail.layoutManager = LinearLayoutManager(context)
         }
     }
