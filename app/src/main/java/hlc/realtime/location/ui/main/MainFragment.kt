@@ -67,7 +67,6 @@ class MainFragment : BaseDaggerFragment(){
             }).addTo(CompositeDisposable())
 
         GPSHelper.getLocation()
-        getlocationListener()
         init()
         initObserver()
         return binding.root
@@ -87,6 +86,9 @@ class MainFragment : BaseDaggerFragment(){
             }
         })
 
+        /** record: true, release: false
+         * 切換按鈕狀態
+         * */
         viewModel.recordStatus.observe(this, androidx.lifecycle.Observer {
             if (it){
                 binding.btnStart.isEnabled = false
@@ -144,7 +146,7 @@ class MainFragment : BaseDaggerFragment(){
                 var latitude :Double = .0
                 var longitude :Double = .0
                 if(list.isNotEmpty()){
-                    /** google map 對 webView 有限制，不能使用多 marker 的方式
+                    /** google map 免費方式有限制，不能使用多 marker 的方式
                      * 多 marker 僅能在 google map API 中使用，為收費API
                      * 故使用多點路徑 URL 代替
                      * */
@@ -180,8 +182,8 @@ class MainFragment : BaseDaggerFragment(){
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uriString))
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.setPackage("com.google.android.apps.maps")
-                        // com.google.android.apps.maps
-                        // com.android.chrome
+                    // com.google.android.apps.maps
+                    // com.android.chrome
                     startActivity(intent)
                 }
             }
@@ -224,14 +226,6 @@ class MainFragment : BaseDaggerFragment(){
             mapPopupWindow.dismiss()
         }
 
-    }
-
-    fun getlocationListener(){
-        locationListener = LocationListener {
-            var vertical = it.longitude // 經度
-            var horizontal = it.latitude // 緯度
-            Timber.tag("hlcDebug").d("locationListener : $vertical / $horizontal")
-        }
     }
 
 }
