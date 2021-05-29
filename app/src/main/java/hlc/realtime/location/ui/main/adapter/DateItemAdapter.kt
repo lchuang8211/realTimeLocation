@@ -12,10 +12,9 @@ import hlc.realtime.location.databinding.LayoutLocationListItemBinding
 import hlc.realtime.location.ui.main.MainFragmentViewModel
 import timber.log.Timber
 
-class DateItemAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DateItemAdapter(val context: Context, val viewModel: MainFragmentViewModel) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var itemList= emptyList<LocationData>()
-    private lateinit var viewModel: MainFragmentViewModel
 
     fun sumbit(item: List<LocationData>){
         itemList = item
@@ -35,7 +34,7 @@ class DateItemAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
 
         //多型應用 對應相應Class取得對應資料
         if (holder is ViewHolder){
-            holder.bind( itemList[ position ] , context)
+            holder.bind( itemList[ position ] , context, viewModel)
         }
     }
 
@@ -52,14 +51,18 @@ class DateItemAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
         }
 
         //顯示資料的規則/邏輯
-        fun bind(item: LocationData, context: Context){
+        fun bind(item: LocationData, context: Context, viewModel: MainFragmentViewModel){
             val date = item.date
             binding.tvDate.text = "${date?.year}/${date?.month}/${date?.day}"
 
-            val adapter = LocationItemAdapter(context)
+            val adapter = LocationItemAdapter(context,viewModel)
             binding.rvLocationDetail.adapter = adapter
             item.locationDetail?.let { adapter.sumbit(item.locationDetail) }
             binding.rvLocationDetail.layoutManager = LinearLayoutManager(context)
+
+            binding.btnShowAll.setOnClickListener {
+                item.locationDetail?.let { viewModel.showAllLocationOnMap(item.locationDetail) }
+            }
         }
     }
 }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="hlc.realtime.location.ui.main.MainFragmentViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        tools:context=".MainActivity">
+
+        <View
+            android:id="@+id/view01"
+            android:layout_width="350dp"
+            android:layout_height="600dp"
+            android:background="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <WebView
+            android:id="@+id/wvMap"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:padding="5dp"
+            app:layout_constraintStart_toStartOf="@+id/view01"
+            app:layout_constraintEnd_toEndOf="@+id/view01"
+            app:layout_constraintTop_toTopOf="@+id/view01"
+            app:layout_constraintBottom_toBottomOf="@+id/view01"
+            tools:ignore="WebViewLayout" />
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@color/black"
+            android:src="@drawable/icon_cross"
+            app:layout_constraintTop_toTopOf="@+id/wvMap"
+            app:layout_constraintBottom_toTopOf="@+id/wvMap"
+            app:layout_constraintEnd_toEndOf="@+id/wvMap"
+            app:layout_constraintStart_toEndOf="@+id/wvMap"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

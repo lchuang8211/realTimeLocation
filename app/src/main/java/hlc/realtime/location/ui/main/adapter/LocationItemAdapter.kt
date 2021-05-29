@@ -6,21 +6,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import hlc.realtime.location.R
 import hlc.realtime.location.data.api.LocationData
-import hlc.realtime.location.databinding.LayoutDateItemBinding
 import hlc.realtime.location.databinding.LayoutLocationListItemBinding
 import hlc.realtime.location.ui.main.MainFragmentViewModel
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
-class LocationItemAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class LocationItemAdapter(val context: Context, val viewModel: MainFragmentViewModel) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var itemList= emptyList<LocationData.LocationDetail>()
-    private lateinit var viewModel: MainFragmentViewModel
-
-    fun setViewModel(viewModel: MainFragmentViewModel) {
-        this.viewModel = viewModel
-    }
 
     fun sumbit(item: List<LocationData.LocationDetail>){
         itemList = item
@@ -40,7 +34,7 @@ class LocationItemAdapter(val context: Context) : RecyclerView.Adapter<RecyclerV
 
         //多型應用 對應相應Class取得對應資料
         if (holder is ViewHolder){
-            holder.bind( itemList[ position ] , position, context)
+            holder.bind( itemList[ position ] , position, context, viewModel)
         }
     }
 
@@ -57,7 +51,7 @@ class LocationItemAdapter(val context: Context) : RecyclerView.Adapter<RecyclerV
         }
 
         //顯示資料的規則/邏輯
-        fun bind(item: LocationData.LocationDetail, position: Int, context: Context){
+        fun bind(item: LocationData.LocationDetail, position: Int, context: Context, viewModel: MainFragmentViewModel){
 
             if (position%2 == 0){
                 binding.clBackground.background = context.getDrawable(R.color.linen)
@@ -71,6 +65,10 @@ class LocationItemAdapter(val context: Context) : RecyclerView.Adapter<RecyclerV
             binding.tvEndTime.text = item.endTime
             binding.tvLocation.text = item.firstAddress
 
+            binding.clBackground.setOnClickListener {
+                Timber.tag("hlcDebug").d("Item Click : ")
+                viewModel.showOneLocationOnMap(item)
+            }
         }
     }
 }

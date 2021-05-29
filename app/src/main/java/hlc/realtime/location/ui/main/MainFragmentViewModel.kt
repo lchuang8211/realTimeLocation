@@ -51,6 +51,23 @@ class MainFragmentViewModel @Inject constructor(
         updateTime()
     }
 
+    var showMapOne :Boolean = false
+    val showMapOneLocation = MutableLiveData<LocationData.LocationDetail>(null)
+
+    var showMapAll :Boolean = false
+    val showMapAllLocation = MutableLiveData<List<LocationData.LocationDetail>>(null)
+
+    /** recycler item clicked show popupWindow */
+    fun showOneLocationOnMap(item: LocationData.LocationDetail){
+        showMapOne = true
+        showMapOneLocation.value = item
+    }
+
+    fun showAllLocationOnMap(item: List<LocationData.LocationDetail>){
+        showMapAll = true
+        showMapAllLocation.value = item
+    }
+
     fun updateTime(){
         val calendar = Calendar.getInstance()
         today = dateFormat.format(calendar.time)
