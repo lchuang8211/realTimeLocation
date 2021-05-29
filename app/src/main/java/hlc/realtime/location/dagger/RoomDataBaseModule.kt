@@ -44,7 +44,7 @@ object RoomDataBaseModule {
     @Singleton
     @Provides
     fun providesUserInfoDao(roomDataBase: RoomDataBase): DefaultTableDao {
-        return roomDataBase.userInfoDao()
+        return roomDataBase.defaultTableDao()
     }
 
 }
