@@ -53,7 +53,6 @@ class DateItemAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.
 
         //顯示資料的規則/邏輯
         fun bind(item: LocationData, context: Context){
-            Timber.tag("hlcDebug").d("bind item 1: $item")
             val date = item.date
             binding.tvDate.text = "${date?.year}/${date?.month}/${date?.day}"
 

@@ -65,7 +65,6 @@ class LocationItemAdapter(val context: Context) : RecyclerView.Adapter<RecyclerV
                 binding.clBackground.background = context.getDrawable(R.color.antique_white)
             }
 
-            Timber.tag("hlcDebug").d("bind item 2: $item")
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.TAIWAN)
             binding.tvSeq.text = item.seq.toString().padStart(2, ' ')+". "
             binding.tvStartTime.text = item.startTime
