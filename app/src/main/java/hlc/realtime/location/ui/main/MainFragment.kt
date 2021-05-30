@@ -126,7 +126,7 @@ class MainFragment : BaseDaggerFragment(){
                     /** Google Map URL format
                      * http://maps.google.com/maps?&z={INSERT_MAP_ZOOM}&mrt={INSERT_TYPE_OF_SEARCH}&t={INSERT_MAP_TYPE}&q={INSERT_MAP_LAT_COORDINATES}+{INSERT_MAP_LONG_COORDINATES}
                      * */
-//                    mapPopupWindowBinding.wvMap.loadUrl("http://maps.google.com/maps?&z=19&mrt=loc&t=p&q=${latitude},${longitude}")
+                    mapPopupWindowBinding.wvMap.loadUrl("http://maps.google.com/maps?&z=19&mrt=loc&t=p&q=${latitude},${longitude}")
 
                     /** intent 開 google map App */
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?&z=19&mrt=loc&t=p&q=${latitude},${longitude}"))
@@ -171,10 +171,10 @@ class MainFragment : BaseDaggerFragment(){
 
                     var uriString = ""
                     if (size > 1) {
-//                        mapPopupWindowBinding.wvMap.loadUrl("http://maps.google.com/maps/dir/$string")
+                        mapPopupWindowBinding.wvMap.loadUrl("http://maps.google.com/maps/dir/$string")
                         uriString = "http://www.google.co.in/maps/dir/$string"
                     } else {
-//                        mapPopupWindowBinding.wvMap.loadUrl("http://maps.google.com/maps?&z=19&mrt=loc&t=p&q=${string.replace("/","")}")
+                        mapPopupWindowBinding.wvMap.loadUrl("http://maps.google.com/maps?&z=19&mrt=loc&t=p&q=${string.replace("/","")}")
                         string = string.replace("/","")
                         uriString = "http://maps.google.com/maps?&z=19&mrt=loc&t=p&q=$string"
                     }
